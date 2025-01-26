@@ -1,13 +1,10 @@
-<<<<<<< HEAD
 matplotlib
 scikit-learn==1.3.0
 streamlit
 Numpy
 Pandas
-=======
 matplotlib
 scikit-learn
 streamlit
 Numpy
 Pandas
->>>>>>> ae3f2fa09079df83c2ab490d59f40c7bfcc92401

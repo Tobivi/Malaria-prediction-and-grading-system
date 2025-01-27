@@ -49,16 +49,16 @@ regressor = pickle.load(pickle_in2)
 Name = st.text_input("Name")
 Pregnancies = st.number_input("The amount of times the individual got pregnant:")
 Availaibility_of_treated_net = st.selectbox("Were treated nets available?", ['No', 'Yes'])
-Season_Level_of_Rainfall_Stagnant_water_breeding = st.number_input("The level of rainfall")
-Malaria_Parasite_Density_Fever_Rapid_Diagnostic_TestStrip = st.number_input("The malaria Parasite Density fever rapid diagnostic")
-Complaints_Symptoms = st.number_input("The complaints or symptoms of the individual")
-Age = st.number_input("The age of the individual")
+Season_Level_of_Rainfall_Stagnant_water_breeding = st.selectbox("The level of rainfall", ['Low', 'High'])
+Malaria_Parasite_Density_Fever_Rapid_Diagnostic_TestStrip = st.number_input("The malaria Parasite Density fever rapid diagnostic:")
+Complaints_Symptoms = st.number_input("The complaints or symptoms of the individual:")
+Age = st.number_input("The age of the individual:")
 Electricity = st.selectbox('Was there availability of electricity?', ['No', 'Yes'])
 Environment_Sanitised_or_not = st.selectbox("Is the environment sanitized or not", ['Yes', 'No'])
 Doctor_to_Patient = st.selectbox("Doctor to patient", ['High', 'Low'])
 Laboratory_Equipments = st.selectbox("Laboratory Equipments", ['Not Adequate', 'Adequate'])
 Location = st.selectbox("Location (Urban or Rural)", ['Urban', 'Rural'])
-submit = st.button("Predict")
+submit = st.button("Prediction")
 
 if submit:
     classification_input_data = [
@@ -68,13 +68,14 @@ if submit:
     ]
 
     classification_input_data[1] = 1 if Availaibility_of_treated_net == 'Yes' else 0
+    classification_input_data[2] = 1 if Season_Level_of_Rainfall_Stagnant_water_breeding == 'High' else 0
     classification_input_data[6] = 1 if Electricity == 'Yes' else 0
     classification_input_data[7] = 1 if Environment_Sanitised_or_not == 'Yes' else 0
     classification_input_data[8] = 1 if Location == 'Urban' else 0
     classification_input_data[9] = 1 if Laboratory_Equipments == 'Adequate' else 0
     classification_input_data[10] = 1 if Doctor_to_Patient == 'High' else 0
 
-    Doctor_to_Patient_Low = 1 - classification_input_data[10]  
+    Doctor_to_Patient_Low = 1 - classification_input_data[10]
     classification_input_data.append(Doctor_to_Patient_Low)
 
     prediction = classifier.predict([classification_input_data])
@@ -99,6 +100,7 @@ if submit:
         ]
 
         regression_input_data[1] = 1 if Availaibility_of_treated_net == 'Yes' else 0
+        regression_input_data[2] = 1 if Season_Level_of_Rainfall_Stagnant_water_breeding == 'High' else 0
         regression_input_data[6] = 1 if Electricity == 'Yes' else 0
         regression_input_data[7] = 1 if Environment_Sanitised_or_not == 'Yes' else 0
         regression_input_data[8] = 1 if Doctor_to_Patient == 'High' else 0
@@ -111,7 +113,13 @@ if submit:
             st.error(f"Expected 11 features, but got {len(regression_input_data)} features.")
         else:
             lab_diagnosis_prediction = regressor.predict([regression_input_data])[0]
-            diagnosis_status = "Complicated" if lab_diagnosis_prediction > 70 else "Uncomplicated"
+
+            if lab_diagnosis_prediction < 45:
+                diagnosis_status = "No Malaria"
+            elif 45 <= lab_diagnosis_prediction <= 69:
+                diagnosis_status = "Uncomplicated"
+            else:
+                diagnosis_status = "Complicated"
 
             st.write(f"The lab diagnosis grading predicts the condition as **{diagnosis_status}**.")
             st.write(f"Malaria Lab Diagnosis: **{lab_diagnosis_prediction:.2f}**.")

@@ -3,7 +3,7 @@ import pickle
 from PIL import Image
 import matplotlib.pyplot as plt
 
-st.title("Malaria Prediction in Nigeria")
+st.title("Malaria Detection in Nigeria")
 image = Image.open('Medicine-Higher-Life-Foundation.jpg')
 st.image(image, caption='Malaria Prediction', use_column_width=True)
 
@@ -86,8 +86,8 @@ if submit:
 
         fig, ax = plt.subplots()
         ax.bar(["Malaria Negative", "Malaria Positive"], [1, 0], color=['#4CAF50', '#F44336'])
-        ax.set_ylabel('Prediction')
-        ax.set_title('Malaria Prediction Result')
+        ax.set_ylabel('Detection')
+        ax.set_title('Malaria Detection Result')
         st.pyplot(fig)
 
     else:
@@ -126,6 +126,6 @@ if submit:
 
             fig, ax = plt.subplots()
             ax.bar(["Malaria Negative", "Malaria Positive"], [0, 1], color=['#4CAF50', '#F44336'])
-            ax.set_ylabel('Prediction')
-            ax.set_title('Malaria Prediction Result')
+            ax.set_ylabel('Detection')
+            ax.set_title('Malaria Detection Result')
             st.pyplot(fig)

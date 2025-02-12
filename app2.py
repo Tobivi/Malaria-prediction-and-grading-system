@@ -3,7 +3,7 @@ import pickle
 from PIL import Image
 import matplotlib.pyplot as plt
 
-st.title("Malaria Detection in Nigeria")
+st.title("Malaria Detection and grading system in Nigeria")
 image = Image.open('Medicine-Higher-Life-Foundation.jpg')
 st.image(image, caption='Malaria Prediction', use_column_width=True)
 
